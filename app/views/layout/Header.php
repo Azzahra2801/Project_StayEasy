@@ -62,7 +62,7 @@
 
         <!-- LOGO -->
         <a href="/Project_StayEasy/app/views/home/index.php" class="navbar-brand">
-            <img src="/Project_StayEasy/public/images/logoHotel.png"
+            <img src="/Project_StayEasy/public/uploads/images/logoHotel.png"
                  alt="StayEasy"
                  style="width:120px;">
         </a>
