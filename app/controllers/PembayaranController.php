@@ -3,13 +3,13 @@ require_once '../config/database.php';
 
 class PembayaranController {
 
-    // 🧾 FORM PEMBAYARAN (TAMU)
+    //  FORM PEMBAYARAN (TAMU)
     public function form() {
         $id_reservasi = $_GET['id_reservasi'];
         require '../app/views/tamu/pembayaran.php';
     }
 
-    // 💾 SIMPAN PEMBAYARAN (TAMU)
+    //  v SIMPAN PEMBAYARAN (TAMU)
     public function simpan() {
         global $conn;
 
@@ -59,18 +59,18 @@ class PembayaranController {
             [$id_reservasi]
         );
 
-        // ⛔ JANGAN update kamar di sini
+        //  JANGAN update kamar di sini
 
         header("Location: index.php?controller=pembayaran&action=sukses");
         exit;
     }
 
-    // 🎉 HALAMAN SUKSES
+    //  HALAMAN SUKSES
     public function sukses() {
         require '../app/views/pembayaran/sukses.php';
     }
 
-    // 📋 LIST PEMBAYARAN (PEMILIK)
+    //  LIST PEMBAYARAN (PEMILIK)
     public function pembayaran() {
         global $conn;
 
@@ -87,7 +87,7 @@ class PembayaranController {
         require '../app/views/pemilik/konfirmasi_pembayaran.php';
     }
 
-    // ✅ ACC PEMBAYARAN (PEMILIK)
+    //  ACC PEMBAYARAN (PEMILIK)
     public function acc() {
         global $conn;
         $id = $_GET['id'];
@@ -101,7 +101,7 @@ class PembayaranController {
             [$id]
         );
 
-        // 🔥 update reservasi + kamar SAAT ACC
+        //  update reservasi + kamar SAAT ACC
         pg_query_params(
             $conn,
             "UPDATE reservasi
@@ -112,18 +112,20 @@ class PembayaranController {
             [$id]
         );
 
-        pg_query_params(
-            $conn,
-            "UPDATE kamar
-             SET status = 'Terisi'
-             WHERE id_kamar = (
-                SELECT r.id_kamar
-                FROM reservasi r
-                JOIN pembayaran p ON p.id_reservasi = r.id_reservasi
-                WHERE p.id_pembayaran = $1
-             )",
-            [$id]
-        );
+// update status kamar saat pembayaran DISETUJUI
+pg_query_params(
+    $conn,
+    "UPDATE kamar
+     SET status = 'Terisi'
+     WHERE id_kamar = (
+        SELECT r.id_kamar
+        FROM reservasi r
+        JOIN pembayaran p ON r.id_reservasi = p.id_reservasi
+        WHERE p.id_pembayaran = $1
+     )",
+    [$id]
+);
+
 
         header("Location: index.php?controller=pembayaran&action=pembayaran");
         exit;

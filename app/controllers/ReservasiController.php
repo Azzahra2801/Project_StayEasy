@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Reservasi.php';
 
 class ReservasiController {
 
-    // 1️⃣ tampilkan form reservasi
+    // 1️ tampilkan form reservasi
     public function form() {
         $id_kamar = $_GET['id'] ?? null;
 
@@ -15,7 +15,7 @@ class ReservasiController {
         require_once __DIR__ . '/../views/tamu/reservasi.php';
     }
 
-    // 2️⃣ simpan data reservasi
+    // 2️ simpan data reservasi
     public function simpan() {
         $id_tamu = Tamu::create(
             $_POST['nama'],

@@ -20,7 +20,7 @@ class AuthController {
             );
 
             if (pg_num_rows($query) > 0) {
-                // ✅ LOGIN BERHASIL
+                //  LOGIN BERHASIL
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $username;
 

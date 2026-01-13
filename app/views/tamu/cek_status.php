@@ -66,7 +66,22 @@
 
                                 <td>
                                     <span class="badge bg-info">
-                                        <?= htmlspecialchars($row['status_reservasi']) ?>
+                                        <td>
+    <?php
+    $status = $row['status_reservasi'];
+
+    $badge = match ($status) {
+        'Menunggu Pembayaran' => 'warning',
+        'Menunggu Konfirmasi' => 'info',
+        'Dikonfirmasi' => 'success',
+        'Selesai' => 'secondary',
+        default => 'dark'
+    };
+    ?>
+    <span class="badge bg-<?= $badge ?>">
+        <?= $status ?>
+    </span>
+</td>
                                     </span>
                                 </td>
 
